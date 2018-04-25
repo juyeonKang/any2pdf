@@ -1,0 +1,32 @@
+
+< Convert API - File conversion API >
+: 시험 기간 ppt 파일을 봐야할 일이 많았는데
+  lubuntu 환경에선 ppt가 열리지 않아 pdf로 변환해야 하는 상황이 빈번히 발생
+  pdf 변환 API가 있길래 커맨드라인에서 사용 가능할까 싶어 도전!
+
+----------------------------------------------------------------------------
+
+: https://www.convertapi.com
+: (Baltsoft Software_Lithuania)
+
+: Sign in 을 해야 Secret / Token을 발급받을 수 있는데, 이게 있어야 변환 가능
+  (즉 Sign in을 해야 convert 가능)
+
+: Secret과 Token은 Athetication을 위해 필요
+: Secret_PHP처럼 not accessible for the user인 server side software용
+: Token_JavaScript 처럼 accessible for the user인 client sid software용
+:      _Tokens can be requested by API call or generated usin Secret
+
+: Sign in을 하면 1인당 15000 seconds가 기본으루 주어짐
+: (아마도) convert 하는데 걸리는 시간을 cost로 하는데,
+: 최대 cost가 10(sec)이라, 무료로 최소 1500번은 사용 가능
+: 최대 cost라는건 Time/Cost = ( 7/7 , 5/5, 17/10, 20/10, ... )
+
+: file size는 Time에는 영향을 미치겠지만 자체적으로 제한이 없음
+: (그리고 사실 file size가 커도 10(sec)만 차감되니까 오히려 이득(..)
+
+: Every conversion request call must be 1)authenticated with Secret of token
+: and 2)submitted as "query parameter" 
+
+: URL passed as a query parameter must be percant encoded
+: (http:// -> http%3A%2F%2F)
