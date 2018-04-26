@@ -30,3 +30,5 @@
 
 : URL passed as a query parameter must be percant encoded
 : (http:// -> http%3A%2F%2F)
+
+: 파일에 url로 접근 가능한 경우 (ec2 /var/www/html/~.ppt ) file=http%3A%2F%2F52.78.114.3/~.ppt 로 접근 가능한 듯?(확인 전)
