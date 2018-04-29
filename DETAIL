@@ -30,3 +30,67 @@
 
 : URL passed as a query parameter must be percant encoded
 : (http:// -> http%3A%2F%2F)
+
+: 파일에 url로 접근 가능한 경우(ec2 /var/www/html/~.ppt ) 
+  file=http%3A%2F%2F52.78.114.3/~.ppt 로 접근 가능한 듯?(확인 전)
+
+: "download" 파라미터
+: (StoreFile 파라미터랑은 분명 다른 파라미터일텐데...)
+: (linke example에는 버튼 누르면 링크 연결하는 html 코드 안에
+   token=XXX 다음에 download=inline or attachment로 들어가는데, 흠냐흠)
+: download 파라미터가 설정되지 않으면 conversion response in XML format 이라는 듯!
+: download=inline이면 vied in brower rather than downloaded 라는건 알겠는데,
+  browser에선 download가 안되는건가....?8ㅅ8 (convert 없이 browser에서 보고 싶을 때 쓰는 듯한 ex)(확인x)
+
+: "Async" 파라미터
+: Secret=XXX 다음에 Async=true 설정하면 response에 JobId 가 딸려옴
+: JobId 가 있으면 retrieve finished conversion result나 get the conversion status 가 가능하다고,
+: => GET https://v2.cconvertapi.com/job/[JobId]/result 
+: 큰 파일을 convert하다가 ConverAPI랑 연결이 끊어졌을 때, JobID를 넣어서 다시 request하면
+  repetitive conversion을 피할 수 있다고..!
+: 이 경우 provide JobId parmeter with "self generated UUID (RFC 4122)" 라는데, 이게 뭐지(?)
+
+: Response headers and body contains this information...
+: "ConversionTime" (Conversion Cost 로 header에 들어 있는 것을 확인!)
+:   time in seconds that took to convert file
+:   In this amount of seconds your balance will be decreased after conversion
+: "FileNave"
+: "FileSize"
+:   converted file size in bytes
+: "FileData"
+: "FileUrl"
+:   link to converted file ** if "StoreFile" parameter is set to "true" **
+
+: HTTP Response Codes
+: [ 200 ]_Conversion completed successfully
+: [ 401 ]
+:    4010_bad secret
+:    4011_bad token
+:    4012_bad self generated token
+:    4013_user credentials not set, secret or oken must be passed
+:    4014_user inactive
+: [ 403 ]
+:    4040_parameter validation error
+:    4041_no content disposition provided
+: [ 500 ]
+:    5000_conversion timeout
+:    5001_conversion failed
+:    5002_pdf file is damaged
+:    5003_file has copy protection (copy protection은 뭐지...?)
+:    5004_no tables to extract in pdf file (....table?)
+:    5005_invalid url format
+:    5006_invalid password (??)
+:    5007_unable to download remote file
+:    5008_unable to access file from local storage
+:    5009_file id is invalid
+:    5010_file link is set incorrectly. url or file id must be set (잘못됐다는거야 없다는거야;)
+:    5011_can't delete (..뭘 왜 지우려고..?)
+: [ 502 ]
+:    5020_worker maximum parallel jobs reached (여기 worker 가 파일 뒤의 ip 정체인가?)
+
+: GET https://v2.convertapi.com/user?Secret=XXX 로 Secret을 가진 사용자의 정보를 알 수 있다!
+  ( XML 형식으로 되돌려 주는 듯 하다 )
+
+: POST https://v2.convertapi.com/upload?Secret=XXX + json에 file 정보 넣어서 fileserver에 파일 저장 가능
+  (3시간 동안 유효)
+: FileId가 response에 담겨서 오니까 이걸로 파일 바로 부를 수 있다지만... 나한테는 불필요할 듯../
