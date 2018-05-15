@@ -13,11 +13,13 @@ Encode_f = str(base64.encodestring(f))
 # json 생성(아직은 utf-8로 인코딩해야하는지 모르겠답)
 dic = {"Parameters":[{"Name":"File","fileValue":{"Name":FileName,"Data":Encode_f}},{"Name":"PdfVersion","Value":"1.7"}]}
 json = dumps(dic)
+data = json.encode('utf-8')
 
 # url 생성
 url = "https://v2.convertapi.com/ppt/to/pdf?Secret=syvSb4otJcH6y4v3&PdfVersion=1.7"
 
 # POST로 request하기
-
+req = Request(url, data=data)
+res = urllib.request.Request(url
 #...근데 결과를 어떻게 받지..? 
 

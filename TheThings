@@ -1,0 +1,10 @@
+[2018.05.13 옆에서 보면서 배운 것]
+
+>>> str()
+1_str(object='')  
+2_str(object=b'', encoding='utf-8', errors='strict') 
+  (encoding이나 errors 인자가 전달이 안되면 object.__str__()을 반환하고,)
+  (encoding이나 errors 인자가 전달되면 object는 반드시 bytes-like object가 주어져야함)
+  (https://docs.python.org/3/library/stdtypes.html#str)
+
+>>> 
