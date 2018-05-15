@@ -7,4 +7,36 @@
   (encoding이나 errors 인자가 전달되면 object는 반드시 bytes-like object가 주어져야함)
   (https://docs.python.org/3/library/stdtypes.html#str)
 
->>> 
+>>> decode/encode('ascii')와 base64 encoding
+_base64는 0-9의 숫자, 알파벳 대문자, 알파벳 소문자, +, / 의 64개 문자로 이진데이터를 표현하므로
+ ASCII 영역의 문자들로만 이루어진다 
+ (wiki를 참고하면 ASCII 영역의 문자로만 표현하려고 base64를 이용하는 것 같기도 하다)
+_따라서 파일을 base64로 인코딩하고 나면, 그 원래 문자 코드가 뭐였든 ASCII로 인코딩이 가능하다!
+_64는 2^6으로, ASCII 문자로 표현 가능한 가장 큰 진법수라고 한다(그냥 흥미)
+
+>>> Request header
+_Request header에서 'Content-type'을 키로 하는 값에 데이터를 어떻게 읽을지를 정의할 수 있다
+_{'Content-type':'application/json'} 의 header를 설정해서 body의 데이터를 json으로 읽도록 한다
+
+>>> urllib.request.Request
+_urllib.request.Request(url, 
+                        data=None, 
+                        headers={}, 
+                        origin_req_host=None, 
+                        unverifiable=False, 
+                        method=None) 
+_url은 유효한 url(type=string)이어야 한다(당연)
+_data는 bytes, file-like objects, iterables object types를 지원한다
+ default header에서 application/x-www-form-urlencoded 이므로 data도 이를 따라야함
+ (key=value&key-value 형태의 데이터라고 한다) <<좀 더 알아볼 것
+_header는 dictionary여야 한다
+ data가 주어질 경우, 이에 맞는 Content-type이 추가되어야 함 (앞선 json과 x-www-form-urlencoded 등)
+_method는 문자열로 주어지며, data=None이면 'GET'이 기본, data가 주어지면 'POST'가 기본이다
+
+>>> urlopen
+_doc을 자세히 읽어보지는 않았지만 결과만 볼 때 response의 body가 urlopen의 결과로 반환되는 것 같다
+
+>>> wireshark
+_https는 암호화되어 알아보지 못하니 http로 바꿔서도 잘 되면 http로 보내서 내용을 확인하자
+ (뭘 봐야 디버깅을 할 거 아니냡..)
+_http로 필터링이 가능하다
